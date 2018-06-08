@@ -1,23 +1,16 @@
-.equ Counter , R16				; Счетчик (преимущественно используется для организации циклов)			;
-.equ OSRG , R17
-.equ Tmp2 , R18					;
-.equ Tmp3 , R19					;
-.equ Tmp4 , R20					; Некоторые переменные общего назначения
-
-.equ MainClock 		, 8000000				; CPU Clock
-.equ TimerDivider 	, MainClock/64/1000 	; 1 mS
-
+.equ RT_TaskQueueSize, 11
+.equ RT_TimersPoolSize, 5
+.equ RT_TimerDivider, 8000000/64/1000 	; 1 mS
+.equ RT_RG, R17
 .macro RT_TIMER taskno, ms
-	ldi 	OSRG, \taskno
+	ldi 	RT_RG, \taskno
 	ldi 	XL, lo8(\ms)
 	ldi 	XH, hi8(\ms)
-	rcall 	SetTimer
+	rcall 	RT_SetTimer
 .endm
-
-
 .macro RT_TASK taskno, ms
-	ldi OSRG, \taskno
-	rcall SendTask
+	ldi RT_RG, \taskno
+	rcall RT_SendTask
 .endm
 
 ;SRAM STS analog for Tiny

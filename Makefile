@@ -35,7 +35,7 @@ OPT = s
 FORMAT = ihex
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c
+SRC = $(TARGET).c kernel.c 
 
 INC = avr.inc
 
@@ -96,7 +96,7 @@ CFLAGS += -std=gnu99
 #             for use in COFF files, additional information about filenames
 #             and function names needs to be present in the assembler source
 #             files -- see avr-libc docs [FIXME: not yet described there]
-ASFLAGS = -Wa,-adhlns=$(<:.s=.lst),-gstabs 
+ASFLAGS = -Wa,-adhlns=$(<:.s=.lst),-gstabs,-strip-local-absolute
 
 
 
