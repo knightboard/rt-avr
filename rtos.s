@@ -53,6 +53,8 @@ RT_Init:
 
 		ldi RT_RG, lo8(RT_TimerDivider)
 		out IOOCR2, RT_RG				; Установить значение в регистр сравнения
+		ldi RT_RG, 1<<7 
+		out IOTIMSK, RT_RG
 		sei						; Разрешить обработку прерываний
 		ret
 
@@ -314,7 +316,5 @@ RT_SetTimer:
 		pop 	Tmp2
 		pop 	ZH
 		pop 	ZL
-		ret	
-
-
-	
+		ret
+.end

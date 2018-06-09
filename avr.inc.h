@@ -46,6 +46,7 @@
 .equ "OCDR", OCDR
 #ifdef MCUSR
 .equ "MCUSR", MCUSR
+.equ "MCUSR", _SFR_IO_ADDR(MCUSR)
 #endif
 .equ "MCUCSR", MCUCSR
 .equ "MCUCR", MCUCR
@@ -54,10 +55,12 @@
 .equ "TIFR", TIFR
 #ifdef TIMSK
 .equ "TIMSK", TIMSK
+.equ "IOTIMSK", _SFR_IO_ADDR(TIMSK)
 #endif
 .equ "GIFR", GIFR
 #ifdef GIMSK
 .equ "GIMSK", GIMSK
+.equ "IOGIMSK", _SFR_IO_ADDR(GIMSK)
 #endif
 
 .equ "GICR", GICR
