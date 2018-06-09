@@ -13,7 +13,7 @@ MCU = atmega32
 # MCU = attiny45
 
 # Target file name (without extension).
-TARGET = rtos
+TARGET = rtos_test
 
 # Programming hardware: type avrdude -c ?
 # to get a full listing.
@@ -35,7 +35,7 @@ OPT = s
 FORMAT = ihex
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c kernel.c 
+SRC = $(TARGET).c rtos.c 
 
 INC = avr.inc
 

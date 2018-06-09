@@ -1,3 +1,12 @@
+.global RT_ClearTimers
+.global RT_ClearTaskQueue
+.global RT_ProcessTaskQueue
+.global RT_Start
+.global RT_TimerInterrupt
+.global RT_Init
+.global RT_SendTask
+.global RT_SetTimer
+.global RT_TaskProcs
 .equ RT_TaskQueueSize, 11
 .equ RT_TimersPoolSize, 5
 .equ RT_TimerDivider, 8000000/64/1000 	; 1 mS
