@@ -292,7 +292,7 @@ program: $(TARGET).hex $(TARGET).eep
 %.hex: %.elf
 	@echo
 	@echo $(MSG_FLASH) $@
-	$(OBJCOPY) -O $(FORMAT) -R .eeprom $< $@
+	$(OBJCOPY) -O $(FORMAT) -j .text $< $@
 
 %.eep: %.elf
 	@echo
