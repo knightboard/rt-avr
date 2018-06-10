@@ -45,7 +45,8 @@ RT_Init:
 		; Init Timer 2
 		; Основной таймер для ядра РТОС
 
-		ldi RT_RG,1<<WGM21|4<<CS20	; Freq = CK/64 - Установить режим и предделитель
+		# ldi RT_RG,1<<WGM21|4<<CS20	; Freq = CK/64 - Установить режим и предделитель
+		ldi RT_RG, 0b00001100
 		out IOTCCR2, RT_RG				; Автосброс после достижения регистра сравнения
 
 		clr RT_RG					; Установить начальное значение счётчиков
@@ -168,7 +169,13 @@ RT_ProcessTaskQueue:
 
 		ld 		RT_RG, Z		; For Event
 		cpi 	RT_RG, 0xFF	; No Event or Addr out of Range
-		breq 	.LPTQL02		; No Action
+		brne 	.LPTQL02		; No Action
+		ldi 	ZL, lo8(RT_TaskProcs)
+		ldi		ZH, hi8(RT_TaskProcs)
+		push 	ZL
+		push	ZH
+		rjmp	.LPTQL03
+.LPTQL02:
 	
 		clr 	ZH
 		lsl 	RT_RG
@@ -207,7 +214,7 @@ RT_ProcessTaskQueue:
 		st 		Z+, RT_RG		
 	
 		sei
-
+.LPTQL03:
 		pop 	ZH
 		pop 	ZL
 		clc
@@ -215,12 +222,7 @@ RT_ProcessTaskQueue:
 		ror ZL
 		clc
 		ijmp 			; Minimize Stack Usage
-	
-.LPTQL02:	
-		ret	
-
-
-;-------------------------------------------------------------------------
+		;-------------------------------------------------------------------------
 ; RT_RG - Event
 RT_SendTask:
 		push 	ZL

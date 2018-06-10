@@ -1,10 +1,11 @@
-.org 0x0000
 .macro INT_DEF sym
 .La=.
 .ifdef \sym
-	rjmp \sym
+	jmp \sym
+	.print "DEFINED"
 .else
 	reti
+	.print "NOT_DEFINED"
 .endif
 
 .org .La+4
@@ -93,8 +94,8 @@
 	INT_DEF INT0_VEC		; (INTO) External interrupt request 0
 	INT_DEF INT1_VEC		; (INT1) External interrupt request 1
 	INT_DEF INT2_VEC	; (INT2) External Interrupt request 2
-	INT_DEF TIMER1_COMP_VEC		; (TIMER1 COMP)
-	INT_DEF	TIMER2_COMP_VEC	; (TIMER2 OVF)
+	INT_DEF TIMER2_COMP_VEC		; (TIMER1 COMP)
+	INT_DEF	TIMER2_OVF_VEC	; (TIMER2 OVF)
 	INT_DEF	TIMER1_CAPT_VEC; (TIMER1 CAPT)
 	INT_DEF TIMER1_COMPA_VEC		; (TIMER1 COMPA)
 	INT_DEF	TIMER1_COMPB_VEC	; (TIMER1 COMPB)
@@ -173,5 +174,6 @@
 	out IOSREG, R16			; Инициализация SREG 
 
 .ifdef RESET_VEC
+	.print "RESET_DEFINED"
 	rjmp RESET_VEC
 .endif
