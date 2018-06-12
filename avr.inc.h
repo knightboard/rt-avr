@@ -23,7 +23,10 @@
 .equ "DDRD", DDRD
 .equ "PORTD", PORTD
 .equ "PINC", PINC
+#ifdef DDRC
 .equ "DDRC", DDRC
+.equ "IODDRC", _SFR_IO_ADDR(DDRC)
+#endif
 .equ "PORTC", PORTC
 .equ "PINB", PINB
 .equ "DDRB", DDRB
@@ -46,7 +49,7 @@
 .equ "OCDR", OCDR
 #ifdef MCUSR
 .equ "MCUSR", MCUSR
-.equ "MCUSR", _SFR_IO_ADDR(MCUSR)
+.equ "IOMCUSR", _SFR_IO_ADDR(MCUSR)
 #endif
 .equ "MCUCSR", MCUCSR
 .equ "MCUCR", MCUCR
@@ -139,8 +142,42 @@
 .equ "XRAMEND", XRAMEND
 .equ "FLASHEND", FLASHEND
 .equ "FUSE_MEMORY_SIZE", FUSE_MEMORY_SIZE
+#ifdef TCCR0
+.equ "TCCR0", TCCR0
+.equ "IOTCCR0", _SFR_IO_ADDR(TCCR0)
+#endif
+#ifdef TCCR2
 .equ "TCCR2", TCCR2
+.equ "IOTCCR2", _SFR_IO_ADDR(TCCR2)
+#endif
+#ifdef TCCR1B
+.equ "TCCR1B", TCCR1B
+.equ "IOTCCR1B", _SFR_IO_ADDR(TCCR1B)
+#endif
+#ifdef TCCR1A
+.equ "TCCR1A", TCCR1A
+.equ "IOTCCR1A", _SFR_IO_ADDR(TCCR1A)
+#endif
+#ifdef TCNT0
+.equ "TCNT0", TCNT0
+.equ "IOTCNT0", _SFR_IO_ADDR(TCNT0)
+#endif
+#ifdef TCNT1L
+.equ "TCNT1L", TCNT1L
+.equ "IOTCNT1L", _SFR_IO_ADDR(TCNT1L)
+#endif
+#ifdef TCNT1H
+.equ "TCNT1H", TCNT1H
+.equ "IOTCNT1H", _SFR_IO_ADDR(TCNT1H)
+#endif
+#ifdef TCNT1
+.equ "TCNT1", TCNT1
+.equ "IOTCNT1", _SFR_IO_ADDR(TCNT1)
+#endif
+#ifdef TCNT2
 .equ "TCNT2", TCNT2
+.equ "IOTCNT2", _SFR_IO_ADDR(TCNT2)
+#endif
 #ifdef SREG
 .equ "SREG", SREG
 .equ "IOSREG", _SFR_IO_ADDR(SREG)
