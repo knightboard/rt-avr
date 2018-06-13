@@ -1,6 +1,3 @@
-.global RT_ClearTimers
-.global RT_ClearTaskQueue
-.global RT_ProcessTaskQueue
 .global RT_Start
 .global RT_TimerInterrupt
 .global RT_Init
