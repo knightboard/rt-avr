@@ -1,120 +1,84 @@
-.macro INT_DEF sym
-.La=.
-.ifdef \sym
-	jmp \sym
-	.print "DEFINED"
+	;; Interrupt table only for atmega7
+
+.Lvstart=.
+.if (MCU == ATMEGA8)
+	rjmp .L1  ; (RESET)
+	.org .Lvstart+2
+	INT_DEF 2 INT0_VEC		; (INTO) External interrupt request 0
+	INT_DEF 2 INT1_VEC		; (INT1) External interrupt request 1
+	INT_DEF 2 TIMER2_COMP_VEC		; (TIMER1 COMP)
+	INT_DEF 2 TIMER2_OVF_VEC	; (TIMER2 OVF)
+	INT_DEF 2 TIMER1_CAPT_VEC; (TIMER1 CAPT)
+	INT_DEF 2 TIMER1_COMPA_VEC		; (TIMER1 COMPA)
+	INT_DEF 2 TIMER1_COMPB_VEC	; (TIMER1 COMPB)
+	INT_DEF 2 TIMER1_OVF_VEC	; (TIMER1 OVF)
+	INT_DEF 2 TIMER0_OVF_VEC	; (TIMER0 OVF)
+	INT_DEF 2 SPI_STC_VEC	; (SPI, STC) Serial Transfer Complete
+	INT_DEF 2 USART_RXC_VEC	; (USART, RXC) USART, RX Complete
+	INT_DEF 2 USART_UDRE_VEC	; (USART, UDRE) USART Data Register Empty
+	INT_DEF 2 USART_TXC_VEC	; (USART, TXC) USART, TX Complete
+	INT_DEF 2 ADC_VEC	; (ADC) ADC Conversion complete
+	INT_DEF 2 EE_RDY_VEC	; (EE_RDY) EEPROM READY
+	INT_DEF 2 ANA_COMP_VEC	; (ANA_COMP) Analog comparator
+	INT_DEF 2 TWI_VEC	; (TWI) 2-wire Serial Interface
+	INT_DEF 2 SPM_RDY_VEC	; (SPM_RDY) Store Program Memory Ready
+
+.elseif (MCU == ATMEGA16)
+
+	jmp .L1  ; (RESET)
+	.org .Lvstart+4
+	INT_DEF 4 INT0_VEC		; (INTO) External interrupt request 0
+	INT_DEF 4 INT1_VEC		; (INT1) External interrupt request 1
+	INT_DEF 4 TIMER2_COMP_VEC		; (TIMER1 COMP)
+	INT_DEF 4 TIMER2_OVF_VEC	; (TIMER2 OVF)
+	INT_DEF 4 TIMER1_CAPT_VEC; (TIMER1 CAPT)
+	INT_DEF 4 TIMER1_COMPA_VEC		; (TIMER1 COMPA)
+	INT_DEF 4 TIMER1_COMPB_VEC	; (TIMER1 COMPB)
+	INT_DEF 4 TIMER1_OVF_VEC	; (TIMER1 OVF)
+	INT_DEF 4 TIMER0_OVF_VEC	; (TIMER0 OVF)
+	INT_DEF 4 SPI_STC_VEC	; (SPI, STC) Serial Transfer Complete
+	INT_DEF 4 USART_RXC_VEC	; (USART, RXC) USART, RX Complete
+	INT_DEF 4 USART_UDRE_VEC	; (USART, UDRE) USART Data Register Empty
+	INT_DEF 4 USART_TXC_VEC	; (USART, TXC) USART, TX Complete
+	INT_DEF 4 ADC_VEC	; (ADC) ADC Conversion complete
+	INT_DEF 4 EE_RDY_VEC	; (EE_RDY) EEPROM READY
+	INT_DEF 4 ANA_COMP_VEC	; (ANA_COMP) Analog comparator
+	INT_DEF 4 TWI_VEC	; (TWI) 2-wire Serial Interface
+	INT_DEF 4 INT2_VEC	; (INT2) External Interrupt request 2
+	INT_DEF 4 TIMER0_COMP_VEC	; (TIMER0 COMP)
+	INT_DEF 4 SPM_RDY_VEC	; (SPM_RDY) Store Program Memory Ready
+
+.elseif (MCU == ATMEGA32)
+
+	jmp .L1  ; (RESET)
+	.org .Lvstart+4
+	INT_DEF 4 INT0_VEC		; (INTO) External interrupt request 0
+	INT_DEF 4 INT1_VEC		; (INT1) External interrupt request 1
+	INT_DEF 4 INT2_VEC	; (INT2) External Interrupt request 2
+	INT_DEF 4 TIMER2_COMP_VEC		; (TIMER1 COMP)
+	INT_DEF 4 TIMER2_OVF_VEC	; (TIMER2 OVF)
+	INT_DEF 4 TIMER1_CAPT_VEC; (TIMER1 CAPT)
+	INT_DEF 4 TIMER1_COMPA_VEC		; (TIMER1 COMPA)
+	INT_DEF 4 TIMER1_COMPB_VEC	; (TIMER1 COMPB)
+	INT_DEF 4 TIMER1_OVF_VEC	; (TIMER1 OVF)
+	INT_DEF 4 TIMER0_COMP_VEC	; (TIMER0 COMP)
+	INT_DEF 4 TIMER0_OVF_VEC	; (TIMER0 OVF)
+	INT_DEF 4 SPI_STC_VEC	; (SPI, STC) Serial Transfer Complete
+	INT_DEF 4 USART_RXC_VEC	; (USART, RXC) USART, RX Complete
+	INT_DEF 4 USART_UDRE_VEC	; (USART, UDRE) USART Data Register Empty
+	INT_DEF 4 USART_TXC_VEC	; (USART, TXC) USART, TX Complete
+	INT_DEF 4 ADC_VEC	; (ADC) ADC Conversion complete
+	INT_DEF 4 EE_RDY_VEC	; (EE_RDY) EEPROM READY
+	INT_DEF 4 ANA_COMP_VEC	; (ANA_COMP) Analog comparator
+	INT_DEF 4 TWI_VEC	; (TWI) 2-wire Serial Interface
+	INT_DEF 4 SPM_RDY_VEC	; (SPM_RDY) Store Program Memory Ready
+
 .else
-	reti
-	.print "NOT_DEFINED"
+	.error MCU
+	.error "Unknown mcu"
 .endif
 
-.org .La+4
-.endm
-
-.macro PUSHLST tmp, car, cdr:vararg
-	PUSHREG \car, \tmp
-	.ifnb \cdr
-	PUSHLST \tmp, \cdr
-	.endif		
-.endm
-
-.macro POPLST tmp, car, cdr:vararg
-	.ifnb \cdr
-	POPLST \tmp, \cdr
-	.endif
-	POPREG \car, \tmp
-.endm
-
-.macro PROLOG car, cdr:vararg
-	.if (\car >= 0x20)
-		.error "Must be register"
-		.exitm
-	.endif
-	push \car
-	.ifnb \cdr
-		PUSHLST \car, \cdr
-	.endif
-.endm
-
-.macro EPILOG car, cdr:vararg
-	.if (\car >= 0x20)
-		.error "Must be register"
-		.exitm
-	.endif
-	.ifnb \cdr
-		POPLST \car, \cdr
-	.endif
-	pop \car
-.endm
-
-.macro PUSHREG reg, tmpreg=R16
-	.if (\reg >= 0x20)
-		IOLDS \tmpreg, \reg
-		push \tmpreg
-	.else
-		push \reg
-	.endif
-.endm
-
-.macro POPREG reg, tmpreg=R16
-	.if (\reg >= 0x20)
-		pop \tmpreg
-		IOSTS \reg, \tmpreg
-	.else
-		pop \reg
-	.endif
-.endm
-
-.macro IOLDS reg, ioreg
-	.if (\ioreg < 0x60)
-		.if (\ioreg < 0x20)
-			.error "Must be IO register"
-			.exitm
-		.endif
-		in \reg, (\ioreg - 0x20)
-	.else
-		lds \reg, \ioreg
-	.endif
-.endm 
-
-.macro IOSTS ioreg, reg
-	.if (\ioreg < 0x60)
-		.if (\ioreg < 0x20)
-			.error "Must be IO register"
-			.exitm
-		.endif
-		out (\ioreg - 0x20), \reg
-	.else
-		sts \ioreg, \reg
-	.endif
-.endm
-
-	;; Interrupt table only for atmega32
-	jmp .L1  ; (RESET)
-	INT_DEF INT0_VEC		; (INTO) External interrupt request 0
-	INT_DEF INT1_VEC		; (INT1) External interrupt request 1
-	INT_DEF INT2_VEC	; (INT2) External Interrupt request 2
-	INT_DEF TIMER2_COMP_VEC		; (TIMER1 COMP)
-	INT_DEF	TIMER2_OVF_VEC	; (TIMER2 OVF)
-	INT_DEF	TIMER1_CAPT_VEC; (TIMER1 CAPT)
-	INT_DEF TIMER1_COMPA_VEC		; (TIMER1 COMPA)
-	INT_DEF	TIMER1_COMPB_VEC	; (TIMER1 COMPB)
-	INT_DEF	TIMER1_OVF_VEC	; (TIMER1 OVF)
-	INT_DEF	TIMER0_COMP_VEC	; (TIMER0 COMP)
-	INT_DEF	TIMER0_OVF_VEC	; (TIMER0 OVF)
-	INT_DEF	SPI_STC_VEC	; (SPI, STC) Serial Transfer Complete
-	INT_DEF	USART_RXC_VEC	; (USART, RXC) USART, RX Complete
-	INT_DEF	USART_UDRE_VEC	; (USART, UDRE) USART Data Register Empty
-	INT_DEF	USART_TXC_VEC	; (USART, TXC) USART, TX Complete
-	INT_DEF	ADC_VEC	; (ADC) ADC Conversion complete
-	INT_DEF	EE_RDY_VEC	; (EE_RDY) EEPROM READY
-	INT_DEF	ANA_COMP_VEC	; (ANA_COMP) Analog comparator
-	INT_DEF	TWI_VEC	; (TWI) 2-wire Serial Interface
-	INT_DEF	SPM_RDY_VEC	; (SPM_RDY) Store Program Memory Ready
-
-.org _VECTORS_SIZE
-;; Interrupts
-
+.org VECTORS_SIZE
 ;; End Interrupts
 
 .L1:
